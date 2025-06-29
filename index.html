@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jumerumi - Crochet Artesanal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #fff8f0;
+      color: #333;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #ffd6d6;
+      padding: 10px 20px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    .logo img {
+      height: 50px;
+      margin-right: 10px;
+    }
+    nav {
+      display: flex;
+      gap: 15px;
+    }
+    .search-cart {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    main {
+      text-align: center;
+      padding: 20px;
+    }
+    .frase {
+      font-style: italic;
+      margin-bottom: 30px;
+      color: #bb5a5a;
+    }
+    .productos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .producto {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      width: 200px;
+    }
+    .producto img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    footer {
+      background-color: #ffd6d6;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="nuevo logo.png" alt="Logo Jumerumi" />
+      <strong>Jumerumi</strong>
+    </div>
+    <nav>
+      <select>
+        <option value="">Mis trabajos</option>
+        <option value="amigurumis">Amigurumis</option>
+        <option value="ropa">Ropa</option>
+        <option value="accesorios">Accesorios</option>
+      </select>
+    </nav>
+    <div class="search-cart">
+      🔍
+      🛒
+    </div>
+  </header>
+
+  <main>
+    <p class="frase">"Cada puntada hecha a mano guarda un pedacito de amor."</p>
+    
+    <div class="productos">
+      <!-- Producto 1 -->
+      <div class="producto">
+        <img src="ranita.jpg" alt="Producto 1" />
+        <h3>Osito de crochet</h3>
+        <p>€15.00</p>
+        <button>Añadir al carrito</button>
+      </div>
+
+      <!-- Producto 2 -->
+      <div class="producto">
+        <img src="rosalila.jpg" alt="Producto 2" />
+        <h3>Llavero flor</h3>
+        <p>€5.00</p>
+        <button>Añadir al carrito</button>
+      </div>
+
+      <!-- Agrega más productos así -->
+    </div>
+  </main>
+
+  <footer>
+    📞 610038713 | 📍 Sevilla, España
+  </footer>
+</body>
+</html>
