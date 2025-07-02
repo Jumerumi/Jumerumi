@@ -189,51 +189,55 @@
 
   <!-- JAVASCRIPT DEL CARRITO -->
   <script>
-  let contador = 0;
-  const carrito = {};
+let contador = 0;
+let total = 0;
+const carrito = [];
 
-  const botones = document.querySelectorAll('.agregar-carrito');
-  const contadorCarrito = document.getElementById('contador-carrito');
-  const listaCarrito = document.getElementById('lista-carrito');
-  const carritoContenido = document.getElementById('carrito-contenido');
-  const carritoIcono = document.querySelector('.carrito');
+const botones = document.querySelectorAll('.agregar-carrito');
+const contadorCarrito = document.getElementById('contador-carrito');
+const listaCarrito = document.getElementById('lista-carrito');
+const carritoContenido = document.getElementById('carrito-contenido');
+const carritoIcono = document.querySelector('.carrito');
 
-  botones.forEach(boton => {
-    boton.addEventListener('click', () => {
-      const producto = boton.closest('.producto');
-      const nombre = producto.querySelector('h3').textContent;
+botones.forEach(boton => {
+  boton.addEventListener('click', () => {
+    const nombre = boton.getAttribute('data-nombre');
+    const precio = parseFloat(boton.getAttribute('data-precio'));
 
-      // Incrementar el contador total
-      contador++;
-      contadorCarrito.textContent = contador;
+    // Añadir producto al carrito
+    carrito.push({ nombre, precio });
+    contador++;
+    total += precio;
 
-      // Contador individual por producto
-      if (carrito[nombre]) {
-        carrito[nombre]++;
-      } else {
-        carrito[nombre] = 1;
-      }
+    // Actualizar contador
+    contadorCarrito.textContent = contador;
 
-      // Actualizar la lista del carrito
-      actualizarListaCarrito();
-    });
+    // Mostrar en lista
+    const item = document.createElement('li');
+    item.textContent = `${nombre} - €${precio.toFixed(2)}`;
+    listaCarrito.appendChild(item);
+
+    // Mostrar total
+    actualizarTotal();
   });
+});
 
-  function actualizarListaCarrito() {
-    listaCarrito.innerHTML = '';
-    for (const nombre in carrito) {
-      const cantidad = carrito[nombre];
-      const item = document.createElement('li');
-      item.textContent = `${nombre} x${cantidad}`;
-      listaCarrito.appendChild(item);
-    }
+carritoIcono.addEventListener('click', () => {
+  carritoContenido.style.display = carritoContenido.style.display === 'none' ? 'block' : 'none';
+});
+
+function actualizarTotal() {
+  let totalElemento = document.getElementById('total-carrito');
+  if (!totalElemento) {
+    totalElemento = document.createElement('p');
+    totalElemento.id = 'total-carrito';
+    carritoContenido.appendChild(totalElemento);
   }
-
-  carritoIcono.addEventListener('click', () => {
-    carritoContenido.style.display =
-      carritoContenido.style.display === 'none' ? 'block' : 'none';
-  });
+  totalElemento.textContent = `Total: €${total.toFixed(2)}`;
+}
 </script>
+
+
 
 
 </body>
