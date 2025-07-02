@@ -3,245 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jumerumi - Hecho a mano</title>
+  <title>Jumerumi</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Comic Sans MS', sans-serif;
-      background-color: #ffffff;
-      color: #333;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 30px;
-      border-bottom: 1px solid #eee;
-      position: sticky;
-      top: 0;
-      background-color: #f2eadf;
-      z-index: 1000;
-    }
-
-    .menu-izquierda {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .menu-izquierda select {
-      padding: 6px 10px;
-      font-size: 14px;
-      border-radius: 4px;
-    }
-
-    .logo-centro img {
-      height: 100px;
-    }
-
-    .iconos-derecha {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .iconos-derecha img {
-      width: 24px;
-      cursor: pointer;
-    }
-
-    .frase {
-      text-align: center;
-      font-style: italic;
-      margin: 30px 10px;
-      color: #bb5a5a;
-      font-size: 18px;
-    }
-
-    .productos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 30px;
+      font-family: sans-serif;
+      padding: 2rem;
     }
 
     .producto {
       border: 1px solid #ddd;
       border-radius: 10px;
-      padding: 15px;
-      text-align: center;
-      background-color: #fafafa;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      max-width: 300px;
     }
 
-    .producto img {
-      width: 180px;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 10px;
+    .carrito {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #f8c8dc;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
-    .producto h3 {
-      margin: 10px 0 5px;
-      font-size: 16px;
+    #lista-carrito li {
+      list-style: none;
+      margin: 5px 0;
     }
 
-    .producto p {
-      margin: 0 0 10px;
+    .contador {
       font-weight: bold;
-    }
-
-    .producto button {
-      padding: 6px 12px;
-      background-color: #ffaaaa;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .producto button:hover {
-      background-color: #e58b8b;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #fff0f0;
-      font-size: 14px;
-      margin-top: 40px;
-      border-top: 1px solid #eee;
+      margin-left: 5px;
+      color: red;
     }
   </style>
 </head>
 <body>
 
-  <!-- ENCABEZADO -->
-  <header>
-    <div class="menu-izquierda">
-      <select>
-        <option>Productos</option>
-        <option>Amigurumis</option>
-        <option>Marcapáginas</option>
-        <option>Llaveros</option>
-        <option>Accesorios</option>
-      </select>
-    </div>
+  <h1>Jumerumi - Productos</h1>
 
-    <div class="logo-centro">
-      <img src="nuevo logo.png" alt="Logo Jumerumi" />
-    </div>
+  <!-- PRODUCTOS -->
+  <div class="producto">
+    <img src="ranita.jpg" alt="Ranita" width="150" />
+    <h3>Ranita</h3>
+    <p>€10.00</p>
+    <button class="agregar-carrito" data-nombre="Ranita" data-precio="10">Añadir al carrito</button>
+  </div>
 
-    <!-- Ícono carrito funcional -->
-    <div class="carrito" style="cursor: pointer;">
-      🛒 <span id="contador-carrito">0</span>
-    </div>
+  <div class="producto">
+    <img src="rosalila.jpg" alt="Rosa Lila" width="150" />
+    <h3>Rosa Lila</h3>
+    <p>€5.00</p>
+    <button class="agregar-carrito" data-nombre="Rosa lila" data-precio="5">Añadir al carrito</button>
+  </div>
 
-    <!-- Lista del carrito -->
-    <div id="carrito-contenido" style="display: none; background: #fff; border: 1px solid #ccc; padding: 10px; position: absolute; right: 10px; top: 50px; width: 250px;">
-      <h4>Carrito:</h4>
-      <ul id="lista-carrito"></ul>
-    </div>
-  </header>
+  <!-- CARRITO -->
+  <div class="carrito">
+    🛒 Carrito: <span class="contador" id="contador-carrito">0</span>
+    <ul id="lista-carrito"></ul>
+    <p id="total-carrito">Total: €0.00</p>
+  </div>
 
-  <!-- FRASE -->
-  <div class="frase">"Cada puntada hecha a mano guarda un pedacito de amor."</div>
-
-<script>
-let contador = 0;
-let total = 0;
-const carrito = [];
-
-const botones = document.querySelectorAll('.agregar-carrito');
-const contadorCarrito = document.getElementById('contador-carrito');
-const listaCarrito = document.getElementById('lista-carrito');
-const carritoContenido = document.getElementById('carrito-contenido');
-const carritoIcono = document.querySelector('.carrito');
-
-botones.forEach(boton => {
-  boton.addEventListener('click', () => {
-    const nombre = boton.getAttribute('data-nombre');
-    const precio = parseFloat(boton.getAttribute('data-precio'));
-
-    // Añadir producto al carrito
-    carrito.push({ nombre, precio });
-    contador++;
-    total += precio;
-
-    // Actualizar contador
-    contadorCarrito.textContent = contador;
-
-    // Mostrar en lista
-    const item = document.createElement('li');
-    item.textContent = `${nombre} - €${precio.toFixed(2)}`;
-    listaCarrito.appendChild(item);
-
-    // Mostrar total
-    actualizarTotal();
-  });
-});
-
-carritoIcono.addEventListener('click', () => {
-  carritoContenido.style.display = carritoContenido.style.display === 'none' ? 'block' : 'none';
-});
-
-function actualizarTotal() {
-  let totalElemento = document.getElementById('total-carrito');
-  if (!totalElemento) {
-    totalElemento = document.createElement('p');
-    totalElemento.id = 'total-carrito';
-    carritoContenido.appendChild(totalElemento);
-  }
-  totalElemento.textContent = `Total: €${total.toFixed(2)}`;
-}
-</script>
-
-
-    <!-- Puedes duplicar más productos aquí -->
-  </section>
-
-  <!-- PIE DE PÁGINA -->
-  <footer>
-    📞 610038713 | 📍 Sevilla, España
-  </footer>
-
-  <!-- JAVASCRIPT DEL CARRITO -->
+  <!-- SCRIPT -->
   <script>
     let contador = 0;
+    let total = 0;
+    const carrito = [];
 
     const botones = document.querySelectorAll('.agregar-carrito');
     const contadorCarrito = document.getElementById('contador-carrito');
     const listaCarrito = document.getElementById('lista-carrito');
-    const carritoContenido = document.getElementById('carrito-contenido');
-    const carritoIcono = document.querySelector('.carrito');
+    const totalCarrito = document.getElementById('total-carrito');
 
     botones.forEach(boton => {
       boton.addEventListener('click', () => {
-        const producto = boton.closest('.producto');
-        const nombre = producto.querySelector('.nombre-producto').textContent;
+        const nombre = boton.getAttribute('data-nombre');
+        const precio = parseFloat(boton.getAttribute('data-precio'));
 
+        carrito.push({ nombre, precio });
         contador++;
+        total += precio;
+
+        // Actualiza visualmente
         contadorCarrito.textContent = contador;
 
         const item = document.createElement('li');
-        item.textContent = nombre;
+        item.textContent = `${nombre} - €${precio.toFixed(2)}`;
         listaCarrito.appendChild(item);
+
+        totalCarrito.textContent = `Total: €${total.toFixed(2)}`;
       });
     });
-
-    carritoIcono.addEventListener('click', () => {
-      carritoContenido.style.display = carritoContenido.style.display === 'none' ? 'block' : 'none';
-    });
   </script>
-
 </body>
 </html>
