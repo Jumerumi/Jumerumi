@@ -156,21 +156,55 @@
   <!-- FRASE -->
   <div class="frase">"Cada puntada hecha a mano guarda un pedacito de amor."</div>
 
-  <!-- PRODUCTOS -->
-  <section class="productos">
-    <div class="producto">
-      <img src="ranita.jpg" alt="Amigurumi" />
-      <h3 class="nombre-producto">Ranita</h3>
-      <p>€10.00</p>
-      <button class="agregar-carrito">Añadir al carrito</button>
-    </div>
+<script>
+let contador = 0;
+let total = 0;
+const carrito = [];
 
-    <div class="producto">
-      <img src="rosalila.jpg" alt="Marcapágina" />
-      <h3 class="nombre-producto">Rosa lila</h3>
-      <p>€5.00</p>
-      <button class="agregar-carrito">Añadir al carrito</button>
-    </div>
+const botones = document.querySelectorAll('.agregar-carrito');
+const contadorCarrito = document.getElementById('contador-carrito');
+const listaCarrito = document.getElementById('lista-carrito');
+const carritoContenido = document.getElementById('carrito-contenido');
+const carritoIcono = document.querySelector('.carrito');
+
+botones.forEach(boton => {
+  boton.addEventListener('click', () => {
+    const nombre = boton.getAttribute('data-nombre');
+    const precio = parseFloat(boton.getAttribute('data-precio'));
+
+    // Añadir producto al carrito
+    carrito.push({ nombre, precio });
+    contador++;
+    total += precio;
+
+    // Actualizar contador
+    contadorCarrito.textContent = contador;
+
+    // Mostrar en lista
+    const item = document.createElement('li');
+    item.textContent = `${nombre} - €${precio.toFixed(2)}`;
+    listaCarrito.appendChild(item);
+
+    // Mostrar total
+    actualizarTotal();
+  });
+});
+
+carritoIcono.addEventListener('click', () => {
+  carritoContenido.style.display = carritoContenido.style.display === 'none' ? 'block' : 'none';
+});
+
+function actualizarTotal() {
+  let totalElemento = document.getElementById('total-carrito');
+  if (!totalElemento) {
+    totalElemento = document.createElement('p');
+    totalElemento.id = 'total-carrito';
+    carritoContenido.appendChild(totalElemento);
+  }
+  totalElemento.textContent = `Total: €${total.toFixed(2)}`;
+}
+</script>
+
 
     <!-- Puedes duplicar más productos aquí -->
   </section>
