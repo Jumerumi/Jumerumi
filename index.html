@@ -188,55 +188,62 @@
   </footer>
 
   <!-- JAVASCRIPT DEL CARRITO -->
-  <script>
-let contador = 0;
-let total = 0;
-const carrito = [];
+<script>
+  const productos = document.querySelectorAll('.producto');
+  const contadorCarrito = document.getElementById('contador-carrito');
+  const listaCarrito = document.getElementById('lista-carrito');
+  const totalCarrito = document.getElementById('total-carrito');
 
-const botones = document.querySelectorAll('.agregar-carrito');
-const contadorCarrito = document.getElementById('contador-carrito');
-const listaCarrito = document.getElementById('lista-carrito');
-const carritoContenido = document.getElementById('carrito-contenido');
-const carritoIcono = document.querySelector('.carrito');
+  let carrito = {};
 
-botones.forEach(boton => {
-  boton.addEventListener('click', () => {
-    const nombre = boton.getAttribute('data-nombre');
-    const precio = parseFloat(boton.getAttribute('data-precio'));
+  productos.forEach(producto => {
+    const nombre = producto.getAttribute('data-nombre');
+    const precio = parseFloat(producto.getAttribute('data-precio'));
+    const btnMas = producto.querySelector('.mas');
+    const btnMenos = producto.querySelector('.menos');
+    const spanCantidad = producto.querySelector('.cantidad');
 
-    // Añadir producto al carrito
-    carrito.push({ nombre, precio });
-    contador++;
-    total += precio;
+    btnMas.addEventListener('click', () => {
+      if (!carrito[nombre]) carrito[nombre] = { cantidad: 0, precio };
+      carrito[nombre].cantidad++;
 
-    // Actualizar contador
-    contadorCarrito.textContent = contador;
+      spanCantidad.textContent = carrito[nombre].cantidad;
+      actualizarCarrito();
+    });
 
-    // Mostrar en lista
-    const item = document.createElement('li');
-    item.textContent = `${nombre} - €${precio.toFixed(2)}`;
-    listaCarrito.appendChild(item);
+    btnMenos.addEventListener('click', () => {
+      if (carrito[nombre] && carrito[nombre].cantidad > 0) {
+        carrito[nombre].cantidad--;
+        spanCantidad.textContent = carrito[nombre].cantidad;
 
-    // Mostrar total
-    actualizarTotal();
+        if (carrito[nombre].cantidad === 0) {
+          delete carrito[nombre];
+        }
+
+        actualizarCarrito();
+      }
+    });
   });
-});
 
-carritoIcono.addEventListener('click', () => {
-  carritoContenido.style.display = carritoContenido.style.display === 'none' ? 'block' : 'none';
-});
+  function actualizarCarrito() {
+    let total = 0;
+    let cantidadTotal = 0;
+    listaCarrito.innerHTML = '';
 
-function actualizarTotal() {
-  let totalElemento = document.getElementById('total-carrito');
-  if (!totalElemento) {
-    totalElemento = document.createElement('p');
-    totalElemento.id = 'total-carrito';
-    carritoContenido.appendChild(totalElemento);
+    for (const [nombre, data] of Object.entries(carrito)) {
+      const subtotal = data.precio * data.cantidad;
+      total += subtotal;
+      cantidadTotal += data.cantidad;
+
+      const item = document.createElement('li');
+      item.textContent = `${nombre} x${data.cantidad} - €${subtotal.toFixed(2)}`;
+      listaCarrito.appendChild(item);
+    }
+
+    contadorCarrito.textContent = cantidadTotal;
+    totalCarrito.textContent = `Total: €${total.toFixed(2)}`;
   }
-  totalElemento.textContent = `Total: €${total.toFixed(2)}`;
-}
 </script>
-
 
 
 
