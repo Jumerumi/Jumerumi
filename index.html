@@ -189,32 +189,52 @@
 
   <!-- JAVASCRIPT DEL CARRITO -->
   <script>
-    let contador = 0;
+  let contador = 0;
+  const carrito = {};
 
-    const botones = document.querySelectorAll('.agregar-carrito');
-    const contadorCarrito = document.getElementById('contador-carrito');
-    const listaCarrito = document.getElementById('lista-carrito');
-    const carritoContenido = document.getElementById('carrito-contenido');
-    const carritoIcono = document.querySelector('.carrito');
+  const botones = document.querySelectorAll('.agregar-carrito');
+  const contadorCarrito = document.getElementById('contador-carrito');
+  const listaCarrito = document.getElementById('lista-carrito');
+  const carritoContenido = document.getElementById('carrito-contenido');
+  const carritoIcono = document.querySelector('.carrito');
 
-    botones.forEach(boton => {
-      boton.addEventListener('click', () => {
-        const producto = boton.closest('.producto');
-        const nombre = producto.querySelector('.nombre-producto').textContent;
+  botones.forEach(boton => {
+    boton.addEventListener('click', () => {
+      const producto = boton.closest('.producto');
+      const nombre = producto.querySelector('h3').textContent;
 
-        contador++;
-        contadorCarrito.textContent = contador;
+      // Incrementar el contador total
+      contador++;
+      contadorCarrito.textContent = contador;
 
-        const item = document.createElement('li');
-        item.textContent = nombre;
-        listaCarrito.appendChild(item);
-      });
+      // Contador individual por producto
+      if (carrito[nombre]) {
+        carrito[nombre]++;
+      } else {
+        carrito[nombre] = 1;
+      }
+
+      // Actualizar la lista del carrito
+      actualizarListaCarrito();
     });
+  });
 
-    carritoIcono.addEventListener('click', () => {
-      carritoContenido.style.display = carritoContenido.style.display === 'none' ? 'block' : 'none';
-    });
-  </script>
+  function actualizarListaCarrito() {
+    listaCarrito.innerHTML = '';
+    for (const nombre in carrito) {
+      const cantidad = carrito[nombre];
+      const item = document.createElement('li');
+      item.textContent = `${nombre} x${cantidad}`;
+      listaCarrito.appendChild(item);
+    }
+  }
+
+  carritoIcono.addEventListener('click', () => {
+    carritoContenido.style.display =
+      carritoContenido.style.display === 'none' ? 'block' : 'none';
+  });
+</script>
+
 
 </body>
 </html>
