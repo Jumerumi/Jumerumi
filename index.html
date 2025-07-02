@@ -77,22 +77,18 @@
       padding: 15px;
       text-align: center;
       background-color: #fafafa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .producto img {
-  width: 180px;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 10px;
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
     }
-    
-    .producto {
-  ...
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
     .producto h3 {
       margin: 10px 0 5px;
@@ -131,92 +127,92 @@
 
   <!-- ENCABEZADO -->
   <header>
-    <!-- Izquierda: Menú -->
     <div class="menu-izquierda">
       <select>
         <option>Productos</option>
         <option>Amigurumis</option>
         <option>Marcapáginas</option>
         <option>Llaveros</option>
-         <option>Accesorios</option>
+        <option>Accesorios</option>
       </select>
     </div>
 
-    <!-- Centro: Logo -->
     <div class="logo-centro">
       <img src="nuevo logo.png" alt="Logo Jumerumi" />
     </div>
 
-    <!-- Derecha: Íconos -->
     <div class="iconos-derecha">
-      
       <img src="loupe.png" alt="Buscar" title="Buscar" />
       <img src="carrito.png" alt="Carrito" title="Carrito de compras" />
     </div>
-    <div class="carrito" style="cursor: pointer;">
-  🛒 <span id="contador-carrito">0</span>
-</div>
 
-<!-- CARRITO VISIBLE -->
-<div id="carrito-contenido" style="display: none; background: #fff; border: 1px solid #ccc; padding: 10px; position: absolute; right: 10px; top: 50px; width: 250px;">
-  <h4>Carrito:</h4>
-  <ul id="lista-carrito"></ul>
-</div>
+    <!-- Ícono carrito funcional -->
+    <div class="carrito" style="cursor: pointer;">
+      🛒 <span id="contador-carrito">0</span>
+    </div>
+
+    <!-- Lista del carrito -->
+    <div id="carrito-contenido" style="display: none; background: #fff; border: 1px solid #ccc; padding: 10px; position: absolute; right: 10px; top: 50px; width: 250px;">
+      <h4>Carrito:</h4>
+      <ul id="lista-carrito"></ul>
+    </div>
   </header>
 
   <!-- FRASE -->
   <div class="frase">"Cada puntada hecha a mano guarda un pedacito de amor."</div>
 
-  <!-- PRODUCTOS --> 
+  <!-- PRODUCTOS -->
   <section class="productos">
     <div class="producto">
       <img src="ranita.jpg" alt="Amigurumi" />
-      <h3 class="Ranita-producto"</h3>
+      <h3 class="nombre-producto">Ranita</h3>
       <p>€10.00</p>
       <button class="agregar-carrito">Añadir al carrito</button>
     </div>
-   
+
     <div class="producto">
       <img src="rosalila.jpg" alt="Marcapágina" />
-      <h3>Rosa lila</h3>
+      <h3 class="nombre-producto">Rosa lila</h3>
       <p>€5.00</p>
-      <button>Añadir al carrito</button>
+      <button class="agregar-carrito">Añadir al carrito</button>
     </div>
 
-    <!-- Puedes duplicar estos bloques para más productos -->
+    <!-- Puedes duplicar más productos aquí -->
   </section>
 
   <!-- PIE DE PÁGINA -->
   <footer>
     📞 610038713 | 📍 Sevilla, España
   </footer>
+
+  <!-- JAVASCRIPT DEL CARRITO -->
   <script>
-  let contador = 0;
+    let contador = 0;
 
-  const botones = document.querySelectorAll('.agregar-carrito');
-  const contadorCarrito = document.getElementById('contador-carrito');
-  const listaCarrito = document.getElementById('lista-carrito');
-  const carritoContenido = document.getElementById('carrito-contenido');
-  const carritoIcono = document.querySelector('.carrito');
+    const botones = document.querySelectorAll('.agregar-carrito');
+    const contadorCarrito = document.getElementById('contador-carrito');
+    const listaCarrito = document.getElementById('lista-carrito');
+    const carritoContenido = document.getElementById('carrito-contenido');
+    const carritoIcono = document.querySelector('.carrito');
 
-  botones.forEach(boton => {
-    boton.addEventListener('click', () => {
-      const producto = boton.closest('.producto');
-      const nombre = producto.querySelector('.nombre-producto').textContent;
+    botones.forEach(boton => {
+      boton.addEventListener('click', () => {
+        const producto = boton.closest('.producto');
+        const nombre = producto.querySelector('.nombre-producto').textContent;
 
-      contador++;
-      contadorCarrito.textContent = contador;
+        contador++;
+        contadorCarrito.textContent = contador;
 
-      const item = document.createElement('li');
-      item.textContent = nombre;
-      listaCarrito.appendChild(item);
+        const item = document.createElement('li');
+        item.textContent = nombre;
+        listaCarrito.appendChild(item);
+      });
     });
-  });
 
-  carritoIcono.addEventListener('click', () => {
-    carritoContenido.style.display = carritoContenido.style.display === 'none' ? 'block' : 'none';
-  });
-</script>
+    carritoIcono.addEventListener('click', () => {
+      carritoContenido.style.display = carritoContenido.style.display === 'none' ? 'block' : 'none';
+    });
+  </script>
 
 </body>
 </html>
