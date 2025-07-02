@@ -153,6 +153,15 @@
       <img src="loupe.png" alt="Buscar" title="Buscar" />
       <img src="carrito.png" alt="Carrito" title="Carrito de compras" />
     </div>
+    <div class="carrito" style="cursor: pointer;">
+  🛒 <span id="contador-carrito">0</span>
+</div>
+
+<!-- CARRITO VISIBLE -->
+<div id="carrito-contenido" style="display: none; background: #fff; border: 1px solid #ccc; padding: 10px; position: absolute; right: 10px; top: 50px; width: 250px;">
+  <h4>Carrito:</h4>
+  <ul id="lista-carrito"></ul>
+</div>
   </header>
 
   <!-- FRASE -->
@@ -162,9 +171,9 @@
   <section class="productos">
     <div class="producto">
       <img src="ranita.jpg" alt="Amigurumi" />
-      <h3>Ranita</h3>
+      <h3 class="Ranita-producto"</h3>
       <p>€10.00</p>
-      <button>Añadir al carrito</button>
+      <button class="agregar-carrito">Añadir al carrito</button>
     </div>
    
     <div class="producto">
@@ -181,5 +190,33 @@
   <footer>
     📞 610038713 | 📍 Sevilla, España
   </footer>
+  <script>
+  let contador = 0;
+
+  const botones = document.querySelectorAll('.agregar-carrito');
+  const contadorCarrito = document.getElementById('contador-carrito');
+  const listaCarrito = document.getElementById('lista-carrito');
+  const carritoContenido = document.getElementById('carrito-contenido');
+  const carritoIcono = document.querySelector('.carrito');
+
+  botones.forEach(boton => {
+    boton.addEventListener('click', () => {
+      const producto = boton.closest('.producto');
+      const nombre = producto.querySelector('.nombre-producto').textContent;
+
+      contador++;
+      contadorCarrito.textContent = contador;
+
+      const item = document.createElement('li');
+      item.textContent = nombre;
+      listaCarrito.appendChild(item);
+    });
+  });
+
+  carritoIcono.addEventListener('click', () => {
+    carritoContenido.style.display = carritoContenido.style.display === 'none' ? 'block' : 'none';
+  });
+</script>
+
 </body>
 </html>
