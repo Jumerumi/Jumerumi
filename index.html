@@ -188,65 +188,53 @@
   </footer>
 
   <!-- JAVASCRIPT DEL CARRITO -->
-<script>
-  const productos = document.querySelectorAll('.producto');
+  <script>
+  let contador = 0;
+  const carrito = {};
+
+  const botones = document.querySelectorAll('.agregar-carrito');
   const contadorCarrito = document.getElementById('contador-carrito');
   const listaCarrito = document.getElementById('lista-carrito');
-  const totalCarrito = document.getElementById('total-carrito');
+  const carritoContenido = document.getElementById('carrito-contenido');
+  const carritoIcono = document.querySelector('.carrito');
 
-  let carrito = {};
+  botones.forEach(boton => {
+    boton.addEventListener('click', () => {
+      const producto = boton.closest('.producto');
+      const nombre = producto.querySelector('h3').textContent;
 
-  productos.forEach(producto => {
-    const nombre = producto.getAttribute('data-nombre');
-    const precio = parseFloat(producto.getAttribute('data-precio'));
-    const btnMas = producto.querySelector('.mas');
-    const btnMenos = producto.querySelector('.menos');
-    const spanCantidad = producto.querySelector('.cantidad');
+      // Incrementar el contador total
+      contador++;
+      contadorCarrito.textContent = contador;
 
-    btnMas.addEventListener('click', () => {
-      if (!carrito[nombre]) carrito[nombre] = { cantidad: 0, precio };
-      carrito[nombre].cantidad++;
-
-      spanCantidad.textContent = carrito[nombre].cantidad;
-      actualizarCarrito();
-    });
-
-    btnMenos.addEventListener('click', () => {
-      if (carrito[nombre] && carrito[nombre].cantidad > 0) {
-        carrito[nombre].cantidad--;
-        spanCantidad.textContent = carrito[nombre].cantidad;
-
-        if (carrito[nombre].cantidad === 0) {
-          delete carrito[nombre];
-        }
-
-        actualizarCarrito();
+      // Contador individual por producto
+      if (carrito[nombre]) {
+        carrito[nombre]++;
+      } else {
+        carrito[nombre] = 1;
       }
+
+      // Actualizar la lista del carrito
+      actualizarListaCarrito();
     });
   });
 
-  function actualizarCarrito() {
-    let total = 0;
-    let cantidadTotal = 0;
+  function actualizarListaCarrito() {
     listaCarrito.innerHTML = '';
-
-    for (const [nombre, data] of Object.entries(carrito)) {
-      const subtotal = data.precio * data.cantidad;
-      total += subtotal;
-      cantidadTotal += data.cantidad;
-
+    for (const nombre in carrito) {
+      const cantidad = carrito[nombre];
       const item = document.createElement('li');
-      item.textContent = `${nombre} x${data.cantidad} - €${subtotal.toFixed(2)}`;
+      item.textContent = `${nombre} x${cantidad}`;
       listaCarrito.appendChild(item);
     }
-
-    contadorCarrito.textContent = cantidadTotal;
-    totalCarrito.textContent = `Total: €${total.toFixed(2)}`;
   }
-</script>
 
+  carritoIcono.addEventListener('click', () => {
+    carritoContenido.style.display =
+      carritoContenido.style.display === 'none' ? 'block' : 'none';
+  });
+</script>
 
 
 </body>
 </html>
-
