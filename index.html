@@ -152,7 +152,7 @@
   <ul id="lista-carrito"></ul>
   <p id="total-carrito">Total: €0.00</p>
 </div>
-    </div>
+    
   </header>
 
   <!-- FRASE -->
@@ -197,7 +197,7 @@
 
   <!-- JAVASCRIPT DEL CARRITO -->
 <script>
-<script>
+  <script>
   const productos = document.querySelectorAll('.producto');
   const contadorCarrito = document.getElementById('contador-carrito');
   const listaCarrito = document.getElementById('lista-carrito');
@@ -252,14 +252,10 @@
     totalCarrito.textContent = `Total: €${total.toFixed(2)}`;
   }
 
-  // Mostrar/Ocultar carrito
   iconoCarrito.addEventListener('click', () => {
     carritoContenido.style.display = carritoContenido.style.display === 'block' ? 'none' : 'block';
   });
 </script>
-
-
-
 
 </body>
 </html>
