@@ -142,16 +142,16 @@
     </div>
 
     <!-- Ícono carrito funcional -->
-    <div class="carrito" style="cursor: pointer;">
-      🛒 <span id="contador-carrito">0</span>
-    </div>
+<div class="carrito" id="icono-carrito" style="cursor: pointer;">
+  🛒 <span id="contador-carrito">0</span>
+</div>
 
     <!-- Lista del carrito -->
     <div id="carrito-contenido" style="display: none; background: #fff; border: 1px solid #ccc; padding: 10px; position: absolute; right: 10px; top: 50px; width: 250px;">
-      <h4>Carrito:</h4>
-      <ul id="lista-carrito"></ul>
-      <p id="total-carrito" style="margin-top: 10px; font-weight: bold;"></p>
-
+  <h4>Carrito:</h4>
+  <ul id="lista-carrito"></ul>
+  <p id="total-carrito">Total: €0.00</p>
+</div>
     </div>
   </header>
 
@@ -197,20 +197,13 @@
 
   <!-- JAVASCRIPT DEL CARRITO -->
 <script>
+<script>
   const productos = document.querySelectorAll('.producto');
   const contadorCarrito = document.getElementById('contador-carrito');
   const listaCarrito = document.getElementById('lista-carrito');
   const totalCarrito = document.getElementById('total-carrito');
-  // Mostrar/ocultar el carrito al hacer clic en el ícono 🛒
-const carritoIcono = document.querySelector('.carrito');
-const carritoContenido = document.getElementById('carrito-contenido');
-
-carritoIcono.addEventListener('click', () => {
-  const visible = carritoContenido.style.display === 'block';
-  carritoContenido.style.display = visible ? 'none' : 'block';
-});
-
-  
+  const carritoContenido = document.getElementById('carrito-contenido');
+  const iconoCarrito = document.getElementById('icono-carrito');
 
   let carrito = {};
 
@@ -224,7 +217,6 @@ carritoIcono.addEventListener('click', () => {
     btnMas.addEventListener('click', () => {
       if (!carrito[nombre]) carrito[nombre] = { cantidad: 0, precio };
       carrito[nombre].cantidad++;
-
       spanCantidad.textContent = carrito[nombre].cantidad;
       actualizarCarrito();
     });
@@ -233,11 +225,9 @@ carritoIcono.addEventListener('click', () => {
       if (carrito[nombre] && carrito[nombre].cantidad > 0) {
         carrito[nombre].cantidad--;
         spanCantidad.textContent = carrito[nombre].cantidad;
-
         if (carrito[nombre].cantidad === 0) {
           delete carrito[nombre];
         }
-
         actualizarCarrito();
       }
     });
@@ -261,7 +251,13 @@ carritoIcono.addEventListener('click', () => {
     contadorCarrito.textContent = cantidadTotal;
     totalCarrito.textContent = `Total: €${total.toFixed(2)}`;
   }
+
+  // Mostrar/Ocultar carrito
+  iconoCarrito.addEventListener('click', () => {
+    carritoContenido.style.display = carritoContenido.style.display === 'block' ? 'none' : 'block';
+  });
 </script>
+
 
 
 
