@@ -201,6 +201,16 @@
   const contadorCarrito = document.getElementById('contador-carrito');
   const listaCarrito = document.getElementById('lista-carrito');
   const totalCarrito = document.getElementById('total-carrito');
+  // Mostrar/ocultar el carrito al hacer clic en el ícono 🛒
+const carritoIcono = document.querySelector('.carrito');
+const carritoContenido = document.getElementById('carrito-contenido');
+
+carritoIcono.addEventListener('click', () => {
+  const visible = carritoContenido.style.display === 'block';
+  carritoContenido.style.display = visible ? 'none' : 'block';
+});
+
+  
 
   let carrito = {};
 
